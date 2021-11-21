@@ -6,21 +6,34 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "create:svg": "npx @svgr/cli -d src/icons src/icons --typescript"
+    "create:svg": "npx @svgr/cli -d src/icons src/icons --typescript",
+    "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.7.2",
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
-    "framer-motion": "^4",
+    "@chakra-ui/react": "1.6.10",
+    "@emotion/react": "11.5.0",
+    "@emotion/styled": "11.3.0",
+    "@urql/exchange-graphcache": "^4.3.5",
+    "formik": "^2.2.9",
+    "framer-motion": "4.1.17",
+    "graphql": "^16.0.1",
     "next": "12.0.4",
+    "next-urql": "^3.3.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-is": "^17.0.2",
+    "urql": "^2.0.5",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.3.0",
+    "@graphql-codegen/typescript": "2.4.1",
+    "@graphql-codegen/typescript-operations": "2.2.1",
+    "@graphql-codegen/typescript-urql": "^3.4.1",
     "@svgr/cli": "^5.5.0",
     "@types/node": "16.11.7",
     "@types/react": "17.0.35",
+    "@types/validator": "^13.7.0",
     "eslint": "7",
     "eslint-config-next": "12.0.4",
     "typescript": "4.5.2"
