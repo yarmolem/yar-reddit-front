@@ -3,7 +3,7 @@ import Icon from '@chakra-ui/icon'
 import { chakra } from '@chakra-ui/system'
 import { Button, IconButton } from '@chakra-ui/button'
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode'
-import { Box, Flex, Heading, HStack, Link, Text } from '@chakra-ui/layout'
+import { Box, Flex, Heading, HStack, Link } from '@chakra-ui/layout'
 
 import { IconMoon, IconSun } from '../../icons'
 import { isServer } from '../../utils/isServer'
@@ -81,7 +81,7 @@ const Navbar = () => {
               </HStack>
             ) : (
               <Flex>
-                <Text mr={4}>{user?.username}</Text>
+                <Box mr={4}>{user?.username}</Box>
                 <Button
                   onClick={logoutMutation}
                   colorScheme="red"

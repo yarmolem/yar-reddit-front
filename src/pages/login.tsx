@@ -28,11 +28,11 @@ const Login = () => {
           <Formik
             validate={loginSchema}
             onSubmit={loginMutation}
-            initialValues={{ username: '', password: '' }}
+            initialValues={{ usernameOrEmail: '', password: '' }}
           >
             {(props: FormikProps<LoginValues>) => (
               <Form>
-                <Input name="username" label="Username" />
+                <Input name="usernameOrEmail" label="Username or email" />
                 <Input name="password" label="Password" type="password" />
 
                 <Button

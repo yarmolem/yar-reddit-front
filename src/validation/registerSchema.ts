@@ -1,13 +1,17 @@
 import validator from 'validator'
-import { RegisterFormValues } from '../interfaces'
+import { RegisterValues } from '../services/useAuthService'
 
 export const registerSchema = ({
+  email,
   username,
   password,
   password2
-}: RegisterFormValues) => {
+}: RegisterValues) => {
   const errors: Record<string, string> = {}
 
+  if (!validator.isEmail(email)) {
+    errors.email = 'Invalid email.'
+  }
   if (validator.isEmpty(username)) {
     errors.username = 'The field username is mark as required.'
   }
@@ -18,7 +22,7 @@ export const registerSchema = ({
     errors.password2 = 'The field password is mark as required.'
   }
   if (password !== password2) {
-    errors.username = 'The password must be the same.'
+    errors.password2 = 'The password must be the same.'
   }
 
   return errors

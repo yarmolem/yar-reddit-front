@@ -14,11 +14,14 @@ type Props = {
 }
 
 export interface LoginValues {
-  username: string
   password: string
+  usernameOrEmail: string
 }
 
-export interface RegisterValues extends LoginValues {
+export interface RegisterValues {
+  email: string
+  username: string
+  password: string
   password2: string
 }
 
@@ -38,10 +41,10 @@ const useAuthService = (props: Props = {}) => {
   }
 
   const loginMutation = async (
-    input: LoginValues,
+    { usernameOrEmail, password }: LoginValues,
     actions: FormikHelpers<LoginValues>
   ) => {
-    const res = await login({ input })
+    const res = await login({ usernameOrEmail, password })
 
     if (res.data?.login.errors) {
       const errors = toErrorMap(res.data?.login.errors)

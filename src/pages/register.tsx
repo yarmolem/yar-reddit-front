@@ -7,8 +7,8 @@ import { Box, Center, Divider, Heading, Container } from '@chakra-ui/layout'
 
 import client from '../graphql/client'
 import Input from '../components/Input'
-import { registerSchema } from '../validation/registerSchema'
 import useAuthService from '../services/useAuthService'
+import { registerSchema } from '../validation/registerSchema'
 
 interface Values {
   username: string
@@ -25,7 +25,7 @@ const Register = () => {
         <title>Register</title>
       </Head>
 
-      <Center h="calc(100vh - 75px)">
+      <Center h="100vh">
         <Box w="full">
           <Heading textAlign="center" mb={4}>
             Register
@@ -34,10 +34,16 @@ const Register = () => {
           <Formik
             validate={registerSchema}
             onSubmit={registerMutation}
-            initialValues={{ username: '', password: '', password2: '' }}
+            initialValues={{
+              email: '',
+              username: '',
+              password: '',
+              password2: ''
+            }}
           >
             {(props: FormikProps<Values>) => (
               <Form>
+                <Input name="email" label="Email" />
                 <Input name="username" label="Username" />
                 <Input name="password" label="Password" type="password" />
                 <Input type="password" name="password2" label="Confirm Pass" />
@@ -46,8 +52,8 @@ const Register = () => {
                   mt={4}
                   w="full"
                   type="submit"
-                  colorScheme="primary"
                   isLoading={loading}
+                  colorScheme="primary"
                 >
                   Sign up
                 </Button>
