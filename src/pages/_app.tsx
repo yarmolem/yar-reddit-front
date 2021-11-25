@@ -6,7 +6,11 @@ import theme from '../theme'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider resetCSS theme={theme}>
-      <Box _dark={{ bg: 'primary.800' }} _light={{ bg: 'primary.50' }}>
+      <Box
+        minH="100vh"
+        _dark={{ bg: 'primary.800' }}
+        _light={{ bg: 'primary.50' }}
+      >
         <Component {...pageProps} />
       </Box>
     </ChakraProvider>

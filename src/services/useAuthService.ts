@@ -6,11 +6,18 @@ import {
   useMeQuery,
   useLoginMutation,
   useLogoutMutation,
-  useRegisterMutation
+  useRegisterMutation,
+  useChangePasswordMutation
 } from '../generated/graphql'
 
 type Props = {
   pauseQuery?: boolean
+}
+
+export interface ChangePasswordValues {
+  token: string
+  password: string
+  password2: string
 }
 
 export interface LoginValues {
@@ -34,6 +41,7 @@ const useAuthService = (props: Props = {}) => {
   const [loginData, login] = useLoginMutation()
   const [logoutData, logout] = useLogoutMutation()
   const [registerData, register] = useRegisterMutation()
+  const [changePassData, changePass] = useChangePasswordMutation()
 
   const logoutMutation = async () => {
     const res = await logout()
@@ -74,16 +82,35 @@ const useAuthService = (props: Props = {}) => {
     router.push('/')
   }
 
+  const changePassMutation = async (
+    { password, token }: ChangePasswordValues,
+    actions: FormikHelpers<ChangePasswordValues>
+  ) => {
+    const res = await changePass({ password, token })
+
+    if (res.data?.changePassword.errors) {
+      const errors = toErrorMap(res.data?.changePassword.errors)
+      return actions.setErrors(errors)
+    }
+
+    console.log('CHANGE_PASSWORD', res)
+
+    actions.resetForm()
+    router.push('/')
+  }
+
   return {
     loginMutation,
     logoutMutation,
     registerMutation,
+    changePassMutation,
     user: meData.data?.me,
     loading:
       meData.fetching ||
       loginData.fetching ||
       logoutData.fetching ||
-      registerData.fetching
+      registerData.fetching ||
+      changePassData.fetching
   }
 }
 
