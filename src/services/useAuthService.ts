@@ -1,17 +1,24 @@
+import { useState } from 'react'
 import { FormikHelpers } from 'formik'
 import { useRouter } from 'next/dist/client/router'
 
-import { toErrorMap } from '../utils/toErrorMap'
 import {
   useMeQuery,
   useLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
+  useForgotPasswordMutation,
   useChangePasswordMutation
 } from '../generated/graphql'
+import { toErrorMap } from '../utils/toErrorMap'
 
 type Props = {
   pauseQuery?: boolean
+}
+
+interface Errors {
+  ok: boolean
+  token?: string
 }
 
 export interface ChangePasswordValues {
@@ -34,6 +41,8 @@ export interface RegisterValues {
 
 const useAuthService = (props: Props = {}) => {
   const router = useRouter()
+  const [errors, setErrors] = useState<Errors>({ ok: true })
+
   // Query para validar mi usuario
   const [meData] = useMeQuery({ pause: props?.pauseQuery })
 
@@ -41,6 +50,7 @@ const useAuthService = (props: Props = {}) => {
   const [loginData, login] = useLoginMutation()
   const [logoutData, logout] = useLogoutMutation()
   const [registerData, register] = useRegisterMutation()
+  const [forgotData, forgotPass] = useForgotPasswordMutation()
   const [changePassData, changePass] = useChangePasswordMutation()
 
   const logoutMutation = async () => {
@@ -56,6 +66,7 @@ const useAuthService = (props: Props = {}) => {
 
     if (res.data?.login.errors) {
       const errors = toErrorMap(res.data?.login.errors)
+      setErrors({ ok: false, ...errors })
       return actions.setErrors(errors)
     }
 
@@ -73,6 +84,7 @@ const useAuthService = (props: Props = {}) => {
 
     if (res.data?.register.errors) {
       const errors = toErrorMap(res.data?.register.errors)
+      setErrors({ ok: false, ...errors })
       return actions.setErrors(errors)
     }
 
@@ -90,6 +102,7 @@ const useAuthService = (props: Props = {}) => {
 
     if (res.data?.changePassword.errors) {
       const errors = toErrorMap(res.data?.changePassword.errors)
+      setErrors({ ok: false, ...errors })
       return actions.setErrors(errors)
     }
 
@@ -99,16 +112,28 @@ const useAuthService = (props: Props = {}) => {
     router.push('/')
   }
 
+  const forgotPassMutation = async (
+    { email }: { email: string },
+    actions: FormikHelpers<{ email: string }>
+  ) => {
+    const res = await forgotPass({ email })
+    console.log('FORGOT_PASSWORD', res)
+    actions.resetForm()
+  }
+
   return {
     loginMutation,
     logoutMutation,
     registerMutation,
     changePassMutation,
+    forgotPassMutation,
+    errors,
     user: meData.data?.me,
     loading:
       meData.fetching ||
       loginData.fetching ||
       logoutData.fetching ||
+      forgotData.fetching ||
       registerData.fetching ||
       changePassData.fetching
   }

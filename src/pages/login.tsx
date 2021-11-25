@@ -3,7 +3,15 @@ import NextLink from 'next/link'
 import { Button } from '@chakra-ui/button'
 import { withUrqlClient } from 'next-urql'
 import { Form, Formik, FormikProps } from 'formik'
-import { Box, Center, Divider, Heading, Container } from '@chakra-ui/layout'
+import {
+  Box,
+  Flex,
+  Link,
+  Center,
+  Divider,
+  Heading,
+  Container
+} from '@chakra-ui/layout'
 
 import client from '../graphql/client'
 import Input from '../components/Input'
@@ -34,6 +42,11 @@ const Login = () => {
               <Form>
                 <Input name="usernameOrEmail" label="Username or email" />
                 <Input name="password" label="Password" type="password" />
+                <Flex justifyContent="flex-end">
+                  <NextLink href="/forgot-password">
+                    <Link>Forgot password ?</Link>
+                  </NextLink>
+                </Flex>
 
                 <Button
                   mt={4}

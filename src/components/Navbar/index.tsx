@@ -39,10 +39,10 @@ const Navbar = () => {
               <NextLink href="/">
                 <Button
                   as="a"
-                  color="gray.500"
-                  display="inline-flex"
-                  alignItems="center"
                   fontSize="md"
+                  color="gray.500"
+                  alignItems="center"
+                  display="inline-flex"
                   _hover={{ color: cl }}
                   _light={{ bg: 'white' }}
                   _dark={{ bg: 'gray.800' }}
@@ -52,10 +52,10 @@ const Navbar = () => {
                 </Button>
               </NextLink>
               <Button
-                color="gray.500"
-                display="inline-flex"
-                alignItems="center"
                 fontSize="md"
+                color="gray.500"
+                alignItems="center"
+                display="inline-flex"
                 _hover={{ color: cl }}
                 _light={{ bg: 'white' }}
                 _dark={{ bg: 'gray.800' }}
@@ -69,12 +69,22 @@ const Navbar = () => {
             {!loading && !user ? (
               <HStack spacing={1}>
                 <NextLink href="/login">
-                  <Button as="a" colorScheme="primary" variant="ghost">
+                  <Button
+                    as="a"
+                    variant="ghost"
+                    cursor="pointer"
+                    colorScheme="primary"
+                  >
                     Sign in
                   </Button>
                 </NextLink>
                 <NextLink href="/register">
-                  <Button as="a" colorScheme="primary" variant="solid">
+                  <Button
+                    as="a"
+                    variant="solid"
+                    cursor="pointer"
+                    colorScheme="primary"
+                  >
                     Sign up
                   </Button>
                 </NextLink>

@@ -1,0 +1,9 @@
+fragment AuthFragment on UserResponse {
+  errors {
+    ...ErrorFrament
+  }
+
+  user {
+    ...UserFragment
+  }
+}
