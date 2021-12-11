@@ -2,6 +2,8 @@ import { dedupExchange, fetchExchange } from 'urql'
 import { cacheExchange } from '@urql/exchange-graphcache'
 
 import { login, logout, register } from './updates'
+import { errorExchange } from './globalError'
+import { cursorPagination } from './pagination'
 
 /** With provider */
 // const client = createClient({
@@ -29,6 +31,11 @@ const client = (ssrExchange: any) => ({
   exchanges: [
     dedupExchange,
     cacheExchange({
+      resolvers: {
+        Query: {
+          getPosts: cursorPagination()
+        }
+      },
       updates: {
         Mutation: {
           login,
@@ -37,6 +44,7 @@ const client = (ssrExchange: any) => ({
         }
       }
     }),
+    errorExchange,
     ssrExchange,
     fetchExchange
   ]

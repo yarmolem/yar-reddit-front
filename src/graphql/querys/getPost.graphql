@@ -1,8 +1,11 @@
-query getPost {
-  getPosts {
+query GetPost($limit: Int!, $cursor: String) {
+  getPosts(limit: $limit, cursor: $cursor) {
     id
     title
+    image
+    likes
     createdAt
     updatedAt
+    textSnippet
   }
 }

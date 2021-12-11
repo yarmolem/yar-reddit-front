@@ -3,18 +3,11 @@ import NextLink from 'next/link'
 import { Button } from '@chakra-ui/button'
 import { withUrqlClient } from 'next-urql'
 import { Form, Formik, FormikProps } from 'formik'
-import {
-  Box,
-  Flex,
-  Link,
-  Center,
-  Divider,
-  Heading,
-  Container
-} from '@chakra-ui/layout'
+import { Box, Flex, Link, Center, Divider, Heading } from '@chakra-ui/layout'
 
 import client from '../graphql/client'
 import Input from '../components/Input'
+import Layout from '../components/Layout'
 import { loginSchema } from '../validation/loginSchema'
 import useAuthService, { LoginValues } from '../services/useAuthService'
 
@@ -22,12 +15,12 @@ const Login = () => {
   const { loading, loginMutation } = useAuthService()
 
   return (
-    <Container>
+    <Layout>
       <Head>
         <title>Login</title>
       </Head>
 
-      <Center h="100vh">
+      <Center h="calc(100vh - 80px)">
         <Box w="full">
           <Heading textAlign="center" mb={4}>
             Login
@@ -75,7 +68,7 @@ const Login = () => {
           </Formik>
         </Box>
       </Center>
-    </Container>
+    </Layout>
   )
 }
 

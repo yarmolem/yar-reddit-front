@@ -30,13 +30,6 @@ const CardBig = (props: Props) => {
 
       <Box p={6}>
         <Box>
-          <chakra.span
-            fontSize="xs"
-            textTransform="uppercase"
-            color={useColorModeValue('brand.600', 'brand.400')}
-          >
-            Product
-          </chakra.span>
           <Link
             display="block"
             color={useColorModeValue('gray.800', 'white')}

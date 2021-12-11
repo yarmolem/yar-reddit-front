@@ -6,12 +6,12 @@ import { Button } from '@chakra-ui/button'
 import { Form, Formik, FormikProps } from 'formik'
 import {
   Box,
-  Center,
-  Container,
+  Text,
   Flex,
-  Heading,
   Link,
-  Text
+  Center,
+  Heading,
+  Container
 } from '@chakra-ui/layout'
 
 import client from '../../graphql/client'

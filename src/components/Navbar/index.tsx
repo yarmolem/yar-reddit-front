@@ -28,7 +28,12 @@ const Navbar = () => {
         _light={{ bg: 'white' }}
         _dark={{ bg: 'gray.800' }}
       >
-        <Flex alignItems="center" justifyContent="space-between" mx="auto">
+        <Flex
+          mx="auto"
+          maxW="7xl"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <NextLink href="/">
             <Link display="flex" alignItems="center">
               <Heading>yar-reddit</Heading>
@@ -40,6 +45,7 @@ const Navbar = () => {
                 <Button
                   as="a"
                   fontSize="md"
+                  cursor="pointer"
                   color="gray.500"
                   alignItems="center"
                   display="inline-flex"
@@ -51,18 +57,22 @@ const Navbar = () => {
                   Blog
                 </Button>
               </NextLink>
-              <Button
-                fontSize="md"
-                color="gray.500"
-                alignItems="center"
-                display="inline-flex"
-                _hover={{ color: cl }}
-                _light={{ bg: 'white' }}
-                _dark={{ bg: 'gray.800' }}
-                _focus={{ boxShadow: 'none' }}
-              >
-                Pricing
-              </Button>
+              <NextLink href="/create-post">
+                <Button
+                  as="a"
+                  fontSize="md"
+                  cursor="pointer"
+                  color="gray.500"
+                  alignItems="center"
+                  display="inline-flex"
+                  _hover={{ color: cl }}
+                  _light={{ bg: 'white' }}
+                  _dark={{ bg: 'gray.800' }}
+                  _focus={{ boxShadow: 'none' }}
+                >
+                  Create a post
+                </Button>
+              </NextLink>
             </HStack>
           </Box>
           <Box display="flex" alignItems="center">

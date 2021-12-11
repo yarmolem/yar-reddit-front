@@ -1,4 +1,5 @@
 import React from 'react'
+import NextImage from 'next/image'
 import {
   Box,
   Flex,
@@ -9,10 +10,14 @@ import {
   HTMLChakraProps,
   useColorModeValue
 } from '@chakra-ui/react'
+import { formatDate } from '../../utils/formatDate'
+import { GetPostQuery } from '../../generated/graphql'
 
-interface Props extends HTMLChakraProps<'div'> {}
+interface Props extends HTMLChakraProps<'div'> {
+  post: GetPostQuery['getPosts'][0]
+}
 
-const CardMedium = (props: Props) => {
+const CardMedium = ({ post, ...props }: Props) => {
   return (
     <Box
       {...props}
@@ -24,32 +29,27 @@ const CardMedium = (props: Props) => {
       bg={useColorModeValue('white', 'gray.800')}
     >
       <Box w={{ lg: '50%' }}>
-        <Box
-          h={{ base: 64, lg: 'full' }}
-          bgSize="cover"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80')"
-          }}
-        ></Box>
+        <Box pos="relative" h={{ base: 64, lg: 'full' }}>
+          <NextImage src={post.image} alt={post.title} layout="fill" />
+        </Box>
       </Box>
 
       <Box py={6} px={6} maxW={{ base: 'xl', lg: '5xl' }} w={{ lg: '50%' }}>
-        <chakra.h2
-          fontSize={{ base: '2xl', md: '3xl' }}
-          color={useColorModeValue('gray.800', 'white')}
-          fontWeight="bold"
+        <Link>
+          <chakra.h2
+            fontSize={{ base: '2xl', md: '3xl' }}
+            color={useColorModeValue('gray.800', 'white')}
+            fontWeight="bold"
+          >
+            {post.title}
+          </chakra.h2>
+        </Link>
+        <chakra.p
+          mt={4}
+          overflow="hidden"
+          color={useColorModeValue('gray.600', 'gray.400')}
         >
-          Build Your New{' '}
-          <chakra.span color={useColorModeValue('brand.600', 'brand.400')}>
-            Idea
-          </chakra.span>
-        </chakra.h2>
-        <chakra.p mt={4} color={useColorModeValue('gray.600', 'gray.400')}>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem modi
-          reprehenderit vitae exercitationem aliquid dolores ullam temporibus
-          enim expedita aperiam mollitia iure consectetur dicta tenetur, porro
-          consequuntur saepe accusantium consequatur.
+          {post.textSnippet}
         </chakra.p>
 
         <Flex
@@ -69,9 +69,9 @@ const CardMedium = (props: Props) => {
               <Image
                 h={10}
                 fit="cover"
+                alt="Avatar"
                 rounded="full"
                 src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
-                alt="Avatar"
               />
               <Link
                 mx={2}
@@ -86,7 +86,7 @@ const CardMedium = (props: Props) => {
               fontSize="sm"
               color={useColorModeValue('gray.600', 'gray.300')}
             >
-              21 SEP 2015
+              {formatDate(post.createdAt)}
             </chakra.span>
           </Flex>
         </Flex>

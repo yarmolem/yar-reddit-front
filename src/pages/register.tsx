@@ -3,10 +3,11 @@ import NextLink from 'next/link'
 import { Button } from '@chakra-ui/button'
 import { withUrqlClient } from 'next-urql'
 import { Form, Formik, FormikProps } from 'formik'
-import { Box, Center, Divider, Heading, Container } from '@chakra-ui/layout'
+import { Box, Center, Divider, Heading } from '@chakra-ui/layout'
 
 import client from '../graphql/client'
 import Input from '../components/Input'
+import Layout from '../components/Layout'
 import useAuthService from '../services/useAuthService'
 import { registerSchema } from '../validation/registerSchema'
 
@@ -20,12 +21,12 @@ const Register = () => {
   const { loading, registerMutation } = useAuthService()
 
   return (
-    <Container>
+    <Layout>
       <Head>
         <title>Register</title>
       </Head>
 
-      <Center h="100vh">
+      <Center h="calc(100vh - 80px)">
         <Box w="full">
           <Heading textAlign="center" mb={4}>
             Register
@@ -75,7 +76,7 @@ const Register = () => {
           </Formik>
         </Box>
       </Center>
-    </Container>
+    </Layout>
   )
 }
 

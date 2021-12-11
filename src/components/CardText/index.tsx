@@ -3,6 +3,7 @@ import {
   Box,
   Flex,
   Link,
+  Image,
   chakra,
   HTMLChakraProps,
   useColorModeValue
@@ -18,31 +19,10 @@ const CardText = (props: Props) => {
       py={3}
       w="full"
       h="full"
-      // maxW="sm"
       shadow="md"
       rounded="md"
       bg={useColorModeValue('white', 'gray.800')}
     >
-      <Flex justifyContent="space-between" alignItems="center">
-        <chakra.span
-          fontSize="sm"
-          color={useColorModeValue('gray.800', 'gray.400')}
-        >
-          Courses and MOOCs
-        </chakra.span>
-        <chakra.span
-          bg={useColorModeValue('brand.200', 'brand.300')}
-          color={useColorModeValue('brand.800', 'brand.900')}
-          px={3}
-          py={1}
-          rounded="full"
-          textTransform="uppercase"
-          fontSize="xs"
-        >
-          psychology
-        </chakra.span>
-      </Flex>
-
       <Box>
         <chakra.h1
           fontSize="lg"
@@ -61,34 +41,34 @@ const CardText = (props: Props) => {
           eligendi similique exercitationem optio libero vitae accusamus
           cupiditate laborum eos.
         </chakra.p>
-      </Box>
 
-      <Box>
-        <Flex
-          alignItems="center"
-          mt={2}
-          color={useColorModeValue('gray.700', 'gray.200')}
-        >
-          <span>Visit on:</span>
-          <Link
-            mx={2}
-            cursor="pointer"
-            textDecor="underline"
-            color={useColorModeValue('brand.600', 'brand.400')}
-          >
-            edx.com
-          </Link>
-          <span>or</span>
-          <Link
-            mx={2}
-            cursor="pointer"
-            textDecor="underline"
-            color={useColorModeValue('brand.600', 'brand.400')}
-            wordBreak="break-word"
-          >
-            classcentral.com
-          </Link>
-        </Flex>
+        <Box mt={4}>
+          <Flex alignItems="center">
+            <Flex alignItems="center">
+              <Image
+                h={10}
+                fit="cover"
+                alt="Avatar"
+                rounded="full"
+                src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
+              />
+              <Link
+                mx={2}
+                fontWeight="bold"
+                color={useColorModeValue('gray.700', 'gray.200')}
+              >
+                Jone Doe
+              </Link>
+            </Flex>
+            <chakra.span
+              mx={1}
+              fontSize="sm"
+              color={useColorModeValue('gray.600', 'gray.300')}
+            >
+              21 SEP 2015
+            </chakra.span>
+          </Flex>
+        </Box>
       </Box>
     </Box>
   )
