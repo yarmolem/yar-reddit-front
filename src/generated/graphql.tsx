@@ -13,6 +13,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
+  Date: any;
   /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
 };
@@ -29,6 +31,7 @@ export type Mutation = {
   createPost: Posts;
   deletePost: Scalars['Boolean'];
   forgotPassword: Scalars['Boolean'];
+  likeAPost: Scalars['Boolean'];
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -57,6 +60,11 @@ export type MutationForgotPasswordArgs = {
 };
 
 
+export type MutationLikeAPostArgs = {
+  postId: Scalars['Int'];
+};
+
+
 export type MutationLoginArgs = {
   password: Scalars['String'];
   usernameOrEmail: Scalars['String'];
@@ -73,6 +81,12 @@ export type MutationUpdatePostArgs = {
   title: Scalars['String'];
 };
 
+export type PaginatedPosts = {
+  __typename?: 'PaginatedPosts';
+  hasMore: Scalars['Boolean'];
+  posts: Array<Posts>;
+};
+
 export type PostInput = {
   content: Scalars['String'];
   image: Scalars['String'];
@@ -83,6 +97,7 @@ export type Posts = {
   __typename?: 'Posts';
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
+  creator: Users;
   creatorId: Scalars['Float'];
   id: Scalars['Float'];
   image: Scalars['String'];
@@ -95,7 +110,7 @@ export type Posts = {
 export type Query = {
   __typename?: 'Query';
   getPostById?: Maybe<Posts>;
-  getPosts: Array<Posts>;
+  getPosts: PaginatedPosts;
   me?: Maybe<Users>;
 };
 
@@ -124,10 +139,10 @@ export type UsernamePasswordInput = {
 
 export type Users = {
   __typename?: 'Users';
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   email: Scalars['String'];
   id: Scalars['Float'];
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   username: Scalars['String'];
 };
 
@@ -225,14 +240,20 @@ export function useRegisterMutation() {
 export const GetPostDocument = gql`
     query GetPost($limit: Int!, $cursor: String) {
   getPosts(limit: $limit, cursor: $cursor) {
-    id
-    likes
-    title
-    image
-    likes
-    createdAt
-    updatedAt
-    textSnippet
+    hasMore
+    posts {
+      id
+      title
+      image
+      likes
+      textSnippet
+      createdAt
+      updatedAt
+      creator {
+        id
+        username
+      }
+    }
   }
 }
     `;
@@ -305,7 +326,7 @@ export type GetPostQueryVariables = Exact<{
 }>;
 
 
-export type GetPostQuery = { __typename?: 'Query', getPosts: Array<{ __typename?: 'Posts', id: number, likes: number, title: string, image: string, createdAt: any, updatedAt: any, textSnippet: string }> };
+export type GetPostQuery = { __typename?: 'Query', getPosts: { __typename?: 'PaginatedPosts', hasMore: boolean, posts: Array<{ __typename?: 'Posts', id: number, title: string, image: string, likes: number, textSnippet: string, createdAt: any, updatedAt: any, creator: { __typename?: 'Users', id: number, username: string } }> } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 

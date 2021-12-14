@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { withUrqlClient } from 'next-urql'
 import { Spinner } from '@chakra-ui/spinner'
-import { Box, Center, Flex, Heading, Stack, Text } from '@chakra-ui/layout'
+import { Center, Flex, Heading, Stack } from '@chakra-ui/layout'
 
 import client from '../graphql/client'
 import Layout from '../components/Layout'
@@ -10,7 +10,7 @@ import usePostService from '../services/usePostService'
 import { Button } from '@chakra-ui/button'
 
 const Home = () => {
-  const { posts, loading, loadMorePosts } = usePostService()
+  const { posts, hasMore, loading, loadMorePosts } = usePostService()
 
   return (
     <>
@@ -31,16 +31,18 @@ const Home = () => {
           </GridItem>
         </Grid> */}
 
-        {!loading ? (
+        {!loading && posts ? (
           <Flex flexDir="column">
             <Stack mb={4} spacing={4}>
               {posts.map((post) => (
                 <CardMedium key={`cardmedium-${post.id}`} post={post} />
               ))}
             </Stack>
-            <Button onClick={loadMorePosts} variant="outline" mx="auto">
-              Load more
-            </Button>
+            {hasMore ? (
+              <Button onClick={loadMorePosts} variant="outline" mx="auto">
+                Load more
+              </Button>
+            ) : null}
           </Flex>
         ) : (
           <Center>

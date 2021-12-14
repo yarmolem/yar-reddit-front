@@ -1,5 +1,6 @@
 import NextLink from 'next/link'
 import Icon from '@chakra-ui/icon'
+import { useRouter } from 'next/router'
 import { chakra } from '@chakra-ui/system'
 import { Button, IconButton } from '@chakra-ui/button'
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode'
@@ -8,12 +9,14 @@ import { Box, Flex, Heading, HStack, Link } from '@chakra-ui/layout'
 import { IconMoon, IconSun } from '../../icons'
 import { isServer } from '../../utils/isServer'
 import useAuthService from '../../services/useAuthService'
+import NavLink from './NavLink'
 
 const Navbar = () => {
   const { toggleColorMode } = useColorMode()
-  const cl = useColorModeValue('gray.800', 'white')
+
   const SwitchIcon = useColorModeValue(IconMoon, IconSun)
 
+  const { pathname } = useRouter()
   const { loading, user, logoutMutation } = useAuthService({
     pauseQuery: isServer()
   })
@@ -41,38 +44,10 @@ const Navbar = () => {
           </NextLink>
           <Box display={{ base: 'none', md: 'inline-flex' }}>
             <HStack spacing={1}>
-              <NextLink href="/">
-                <Button
-                  as="a"
-                  fontSize="md"
-                  cursor="pointer"
-                  color="gray.500"
-                  alignItems="center"
-                  display="inline-flex"
-                  _hover={{ color: cl }}
-                  _light={{ bg: 'white' }}
-                  _dark={{ bg: 'gray.800' }}
-                  _focus={{ boxShadow: 'none' }}
-                >
-                  Blog
-                </Button>
-              </NextLink>
-              <NextLink href="/create-post">
-                <Button
-                  as="a"
-                  fontSize="md"
-                  cursor="pointer"
-                  color="gray.500"
-                  alignItems="center"
-                  display="inline-flex"
-                  _hover={{ color: cl }}
-                  _light={{ bg: 'white' }}
-                  _dark={{ bg: 'gray.800' }}
-                  _focus={{ boxShadow: 'none' }}
-                >
-                  Create a post
-                </Button>
-              </NextLink>
+              <NavLink isActive={pathname === '/'}>Blog</NavLink>
+              <NavLink to="create-post" isActive={pathname === '/create-post'}>
+                Create a post
+              </NavLink>
             </HStack>
           </Box>
           <Box display="flex" alignItems="center">

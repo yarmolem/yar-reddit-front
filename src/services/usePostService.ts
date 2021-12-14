@@ -40,17 +40,19 @@ const usePostService = () => {
   }
 
   const loadMorePosts = () => {
-    const date = data?.getPosts[data.getPosts.length - 1].createdAt
+    const length = data?.getPosts.posts.length
+    const date = data?.getPosts.posts[length! - 1].createdAt
     const cursor = String(+new Date(date))
     setVariables((v) => ({ ...v, cursor }))
   }
 
   const cleanErrors = () => setErrors({ ok: true })
 
-  const posts = data ? data.getPosts : []
+  const posts = data ? data.getPosts.posts : []
 
   return {
     posts,
+    hasMore: data?.getPosts.hasMore,
     errors,
     cleanErrors,
     loadMorePosts,

@@ -14,7 +14,7 @@ import { formatDate } from '../../utils/formatDate'
 import { GetPostQuery } from '../../generated/graphql'
 
 interface Props extends HTMLChakraProps<'div'> {
-  post: GetPostQuery['getPosts'][0]
+  post: GetPostQuery['getPosts']['posts'][0]
 }
 
 const CardMedium = ({ post, ...props }: Props) => {
@@ -78,7 +78,7 @@ const CardMedium = ({ post, ...props }: Props) => {
                 fontWeight="bold"
                 color={useColorModeValue('gray.700', 'gray.200')}
               >
-                Jone Doe
+                {post.creator.username}
               </Link>
             </Flex>
             <chakra.span
